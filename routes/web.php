@@ -3,6 +3,8 @@
 use App\Http\Controllers\AboutController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ArticleController;
+use App\Http\Controllers\LevelController;
+use App\Http\Controllers\KategoriController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\WelcomeController;
@@ -29,23 +31,11 @@ Route::get('/world', function () {
 Route::get('/welcome', function () {
     return 'Welcome';
    });
-Route::get('/nama', function () {
-    return '2241720253_FahruddinZaimIbrahimWicaksono';
-   });
-Route::get('/user/{name}', function ($name) {
-    return 'My name is '.$name;
-    });
 Route::get('/posts/{post}/comments/{comment}', function
     ($postId, $commentId) {
      return 'Pos ke-'.$postId." Komentar ke-: ".$commentId;
     });
 Route::get('/articles/{id}', [ArticleController::class,'articles']);
-Route::get('/user/{name?}', function ($name=null) {
-        return 'My name is '.$name;
-        });
-Route::get('/user/{name?}', function ($name='John') {
-        return 'Nama saya '.$name;
-        });
 Route::resource('photos', PhotoController::class)->only([
     'index', 'show'
    ]);
@@ -63,3 +53,7 @@ Route::prefix('products')->group(function () {
 Route::get('/user/{id}/name/{name}', [UserController::class, 'show']);
 
 Route::get('/sales', [SalesController::class, 'index']);
+
+Route::get('/level', [LevelController::class, 'index']);
+Route::get('/kategori', [KategoriController::class, 'index']);
+Route::get('/user', [UserController::class, 'index']);
