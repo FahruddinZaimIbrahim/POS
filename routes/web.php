@@ -7,6 +7,9 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\WelcomeController;
 use App\Http\Controllers\PhotoController;
+use App\Http\Controllers\ProductController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\SalesController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -49,4 +52,14 @@ Route::resource('photos', PhotoController::class)->only([
 Route::resource('photos', PhotoController::class)->except([
     'create', 'store', 'update', 'destroy'
    ]);
-   Route::get('/greeting',[WelcomeController::class,'greeting'] );
+Route::get('/greeting',[WelcomeController::class,'greeting'] );
+Route::prefix('products')->group(function () {
+    Route::get('/category/food-beverage', [ProductController::class, 'foodBeverage']);
+    Route::get('/category/beauty-health', [ProductController::class, 'beautyHealth']);
+    Route::get('/category/home-care', [ProductController::class, 'homeCare']);
+    Route::get('/category/baby-kid', [ProductController::class, 'babyKid']);
+});
+
+Route::get('/user/{id}/name/{name}', [UserController::class, 'show']);
+
+Route::get('/sales', [SalesController::class, 'index']);

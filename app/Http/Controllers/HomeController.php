@@ -7,6 +7,6 @@ use Illuminate\Http\Request;
 class HomeController extends Controller
 {
     public function welcome() {
-        return 'Welcome';
+        return 'Welcome to Point Of Sales';
     }
 }
