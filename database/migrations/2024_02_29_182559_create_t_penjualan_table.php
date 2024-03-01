@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id('penjualan_id');
             $table->unsignedBigInteger('user_id')->index();
             $table->String('pembeli', 50);
-            $table->String('penjualan_kode', 20);
+            $table->String('penjualan_kode', 20)->unique();
             $table->date('penjualan_tanggal');
             $table->timestamps();
 
