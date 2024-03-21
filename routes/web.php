@@ -22,7 +22,10 @@ use App\Http\Controllers\SalesController;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-Route::get('/', [HomeController::class,'welcome']);
+Route::get('/',function()
+{
+    return view('welcome');
+});
 Route::get('/about', [AboutController::class,'about']);
 Route::get('/hello', [WelcomeController::class,'hello']);
 Route::get('/world', function () {
@@ -56,6 +59,11 @@ Route::get('/sales', [SalesController::class, 'index']);
 
 Route::get('/level', [LevelController::class, 'index']);
 Route::get('/kategori', [KategoriController::class, 'index']);
+Route::get('/kategori/create', [KategoriController::class, 'create']);
+Route::post('/kategori', [KategoriController::class, 'store']);
+Route::get('/kategori/update/{id}', [KategoriController::class, 'update'])->name('kategori.update');
+Route::put('/kategori/update_save/{id}', [KategoriController::class, 'update_save'])->name('kategori.update_save');
+Route::get('/kategori/delete/{id}', [KategoriController::class, 'delete'])->name('kategori.delete');
 Route::get('/user', [UserController::class, 'index'])->name('/user');
 Route::get('/user/count', [UserController::class, 'index']);
 Route::get('/user/tambah',[UserController::class,'tambah'])->name('/user/tambah');

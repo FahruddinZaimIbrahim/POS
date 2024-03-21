@@ -3,26 +3,74 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
+use App\DataTables\KategoriDataTable;
+use App\Models\KategoriModel;
 
 class KategoriController extends Controller
 {
-    public function index(){
-        /*$data = [
-            'kode_kategori' => 'SNK',
-            'nama_kategori' => 'Snack/Makanan Ringan',
-            'created_at' => now()
-        ];
-        DB::table('m_kategori')->insert($data);
-        return 'Insert data baru berhasil';*/
+    //index
+    public function index(KategoriDataTable $dataTable)
+    {
+        // DB::insert('insert into m_kategori(kategori_nama, kategori_kode, created_at) values(?, ?, ?)', ['permen', '89', now()]);
+        // return 'Data berhasil ditambah';
 
-        //$row = DB::table('m_kategori')->where('kode_kategori','SNK')->update(['nama_kategori'=>'camilan']);
-        //return 'Update data berhasil. Jumlah data yang diupdate: '.$row.' baris';
+        //update
+        // $row = DB::table('m_kategori')->where('kategori_kode', '89')->update(['kategori_nama' => 'Permen']);
+        // return 'Data berhasil diupdate. jumlah data yang diupdate: ' . $row;
 
-        //$row = DB::table('m_kategori')->where('kode_kategori','SNK')->delete();
-        //return 'Delete data berhasil. Jumlah data yang dihapus: ' .$row. ' baris';
+        //delete
+        // $row = DB::table('m_kategori')->where('kategori_kode', '89')->delete();
+        // return 'Data berhasil dihapus. jumlah data yang dihapus: ' . $row;
 
-        $data = DB::table('m_kategori')->get();
-        return view('kategori',['data'=>$data]);
+        //select view
+        // $data = DB::table('m_kategori')->get();
+        // return view('kategori', ['data' => $data]);
+
+        // return $dataTable->render('kategori.index');
+
+        return $dataTable->render('kategori.index');
+
+        //tampilkan data datatable
+
+
+    }
+    //create
+    public function create()
+    {
+        return view('kategori.create');
+    }
+
+    //store
+    public function store(Request $request)
+    {
+        KategoriModel::create(
+              [
+                'kode_kategori' => $request->kodeKategori,
+                'nama_kategori' => $request->namaKategori,
+              ]
+       );
+
+         return redirect('/kategori');
+    }
+
+    public function update($id) {
+        $data = KategoriModel::find($id);
+        return view('kategori.update', ['kategori' => $data]);
+    }
+
+    public function update_save(Request $request, $id) {
+        $data = KategoriModel::find($id);
+        $data->kode_kategori = $request->kodeKategori;
+        $data->nama_kategori = $request->namaKategori;
+        $data->save();
+
+        return redirect('/kategori');
+    }
+
+    public function delete($id) {
+        $data = KategoriModel::find($id);
+        $data->delete();
+
+        return redirect('/kategori');
     }
 }
