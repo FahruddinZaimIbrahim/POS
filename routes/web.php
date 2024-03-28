@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\WelcomeController;
 use App\Http\Controllers\PhotoController;
+use App\Http\Controllers\POSController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\SalesController;
@@ -58,6 +59,8 @@ Route::get('/user/{id}/name/{name}', [UserController::class, 'show']);
 Route::get('/sales', [SalesController::class, 'index']);
 
 Route::get('/level', [LevelController::class, 'index']);
+Route::get('/level/tambah',[LevelController::class,'tambah'])->name('/level/tambah');
+Route::get('/level/tambah_simpan',[LevelController::class,'tambah_simpan'])->name('/level/tambah_simpan');
 Route::get('/kategori', [KategoriController::class, 'index']);
 Route::get('/kategori/create', [KategoriController::class, 'create']);
 Route::post('/kategori', [KategoriController::class, 'store']);
@@ -71,3 +74,4 @@ Route::get('/user/ubah/{id}',[UserController::class,'ubah'])->name('/user/ubah')
 Route::get('/user/hapus/{id}',[UserController::class,'hapus'])->name('/user/hapus');
 Route::post('/user/tambah_simpan',[UserController::class, 'tambah_simpan'])->name('/user/tambah_simpan');
 Route::put('/user/ubah_simpan/{id}',[UserController::class, 'ubah_simpan'])->name('/user/ubah_simpan');
+Route::resource('m_user', POSController::class);

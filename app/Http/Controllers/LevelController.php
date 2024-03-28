@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\LevelModel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Http\Requests\StorePostRequest;
+use illuminate\Http\RedirectResponse;
 
 class LevelController extends Controller
 {
@@ -20,5 +23,20 @@ class LevelController extends Controller
 
         $data = DB::select('select * from m_level');
         return view('level',['data' => $data]);
+    }
+    public function tambah()
+    {
+        return view('level_tambah');
+    }
+    public function tambah_simpan(StorePostRequest $request): RedirectResponse {
+        
+        $validated = $request->validated();
+        
+        $validated = $request->safe()->only(['level_kode', 'level_nama']);
+        $validated = $request->safe()->except(['level_kode', 'level_nama']);
+        
+        LevelModel::create($validated);
+
+        return redirect('/level');
     }
 }
