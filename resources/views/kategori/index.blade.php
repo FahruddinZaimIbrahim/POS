@@ -1,24 +1,75 @@
-@extends('layout.app')
-
-{{-- Customize layout sections --}}
-
-@section('subtitle', 'Kategori')
-@section('content_header_title', 'Home')
-@section('content_header_subtitle', 'Kategori')
+@extends('layout.template')
 
 @section('content')
-<div class="container">
-    <div class="card">
-        <div class="card-header">Manage Kategori</div>
+    <div class="card card-outline card-primary">
+        <div class="card-header">
+            <h3 class="card-title">{{ $page->title }}</h3>
+            <div class="card-tools">
+                <a class="btn btn-sm btn-primary mt-1" href="{{ url('kategori/create') }}">Tambah</a>
+            </div>
+        </div>
         <div class="card-body">
-            {{$dataTable->table()}}
-            <!-- Add button to redirect to create category page -->
-            <a href="{{ url('/kategori/create') }}" class="btn btn-primary">Add</a>
+            @if (session('success'))
+                <div class="alert alert-success">{{ session('success') }}</div>
+            @endif
+            @if (session('error'))
+                <div class="alert alert-danger">{{ session('error') }}</div>
+            @endif
+            <table class="table table-bordered table-striped table-hover table-sm" id="table_kategori">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Kode Kategori</th>
+                        <th>Nama Kategori</th>
+                        <th>Aksi</th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
         </div>
     </div>
-</div>
 @endsection
 
-@push('scripts')
-    {{$dataTable->scripts()}}    
+@push('css')
 @endpush
+
+@push('js')
+<script>
+    $(document).ready(function() {
+        var dataTable = $('#table_kategori').DataTable({
+            serverSide: true,
+            ajax: {
+                "url": "{{ url('kategori/list') }}",
+                "dataType": "json",
+                "type": "POST",
+
+            },
+            columns: [{
+                    data: "DT_RowIndex",
+                    className: "text-center",
+                    orderable: false,
+                    searchable: false
+                },
+                {
+                    data: "kode_kategori",
+                    className: "",
+                    orderable: true,
+                    searchable: true
+                },
+                {
+                    data: "nama_kategori",
+                    className: "",
+                    orderable: true,
+                    searchable: true
+                },
+                {
+                    data: "action",
+                    className: "",
+                    orderable: false,
+                    searchable: false
+                }
+            ]
+        });
+    });
+</script>@endpush
